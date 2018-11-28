@@ -57,11 +57,17 @@ class Desafios_model extends CI_Model
 
     public function selectDesafiosByAluno($idAluno)
     {
-        $this->db->select('d.nome,d.id');
+        $this->db->select('d.id');
+        $this->db->select('d.nome');
+        $this->db->select('d.idHabilidades');
+        $this->db->select('td.valorExperiencia');
+        $this->db->select('r.nota');
         $this->db->from('desafios as d');
+        $this->db->join('tiposdesafios as td','td.id = d.id');
         $this->db->join('habilidades as h','h.id = d.idHabilidades');
         $this->db->join('habilidades_usuarios as hu','hu.idHabilidades = h.id');
         $this->db->join('alunos as a','a.id = hu.idAluno');
+        $this->db->join('respostas as r','r.idAluno = a.id and r.idDesafio = d.id', 'left');
         $this->db->where('a.idUsuario',$idAluno);
 
         $query = $this->db->get();
