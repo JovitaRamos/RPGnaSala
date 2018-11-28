@@ -29,7 +29,7 @@ class Materias extends CI_Controller {
         $data['materiasAluno'] = $this->buscarMateriasPorAluno();
         $data['desafiosAluno'] = $this->buscarDesafiosPorAluno();
 
-        //$habilidadesUsuario = $this->Habilidades_Usuarios_model->selectByidUsuario($idUsuario);
+        $data['habilidades'] = $this->Habilidades_Usuarios_model->selectByidUsuario($idUsuario);
         $data['dadosAluno'] = $this->Materia_model->selectMateriaByUsuario($idUsuario);
 
         $this->load->view('header', $data);
@@ -91,11 +91,6 @@ class Materias extends CI_Controller {
         return $this->Materia_model->selectNomeByProfessor($idProfessor);
     }
 
-    public function buscarMateriasPorId()
-    {
-        return $this->Materia_model->selectByidMateria($_GET['id']);
-    }
-
     public function buscarMateriasPorAluno()
     {
         $idAluno = $this->session->userdata('user_id');
@@ -108,6 +103,11 @@ class Materias extends CI_Controller {
         return $this->Desafios_model->selectDesafiosByAluno($idAluno);
     }
 
+    public function buscarMateriasPorId()
+    {
+        return $this->Materia_model->selectByidMateria($_GET['id']);
+    }
+    
     public function inscreverAlunoMateria()
     {
         $idUsuario = $this->session->userdata('user_id');
