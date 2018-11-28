@@ -11,34 +11,52 @@
                 </div>
             </div>
         </div>
-                            <?
-                            //print_r($dadosAluno);
-                            foreach ($dadosAluno as $dadosAluno):
+                            <?php    
+                            foreach ($dadosAluno as $dadoAluno):
                                 echo '<div class="content mt-3">';
                                 echo '<div class="animated fadeIn">';
                                 echo '<div class="row">';
                                 echo '<div class="col-lg-6">';
                                 echo '<div class="card">';
                                 echo '<div class="card-header">';
-                                echo '<strong class="card-title">'.$dadosAluno['NomeMateria'].'</strong></div>';
+                                echo '<strong class="card-title">'.$dadoAluno['NomeMateria'].'</strong></div>';
                                 echo '<div class="card-body">';
                                 echo '<table class="table table-striped">';
-                                echo '<tr>';
-                                    echo '<th scope="col">Habilidade</th>';
-                                    echo '<th scope="col">Nível</th>';
-                                    echo '<th scope="col">Experiencia</th>';
-                                    echo '</tr></thead><tbody>';
-
-                                    foreach ($dadosAluno as $dadoAluno):
-                                    echo '<tr>';
-                                    echo '<th scope="row">'.$habilidadesAluno['nome'].'</th>';
-                                    echo '<td>'.$habilidadesAluno['nivel'].'</td>';
-                                    echo '<td>'.$habilidadesAluno['experiencia'].'</td>';
-                                    echo '</tr>';
-
-                                    endforeach;
+                                $total = 0;
+                                foreach ($habilidades as $habilidadesAluno):
+                                    if ($habilidadesAluno['idHabilidades'] === $dadoAluno['idHabilidades'])
+                                    {
+                                        echo '<tr><thead>';
+                                        echo '<th scope="col"></th>';
+                                        echo '<th scope="col">'.$habilidadesAluno['nome'].'</th>';
+                                        echo '<th scope="col">Nível:</th>';
+                                        echo '<th scope="col">'.$habilidadesAluno['nivel'].'</th>';
+                                        echo '</tr></thead><tbody>';
+                                        
+                                        $index = 0;
+                                        
+                                        foreach ($desafiosAluno as $desafio):
+                                            if ($desafio['idHabilidades'] === $dadoAluno['idHabilidades'])
+                                            {
+                                                $nota = isset($desafio['nota'])?$desafio['nota']:0;
+                                                $valorExperiencia = isset($desafio['valorExperiencia'])?$desafio['valorExperiencia']:0;
+                                                $total = $total + $nota;
+                                                echo '<tr>';
+                                                echo '<td>'.++$index.'</td>';
+                                                echo '<td>'.$desafio['nome'].'</td>';
+                                                echo '<td>Exp:</td>';
+                                                echo '<td>'.$nota.'/'.$valorExperiencia.'</td>';
+                                                echo '</tr>';
+                                            }
+                                        endforeach;
+                                    }
+                                endforeach;
                                 echo '</tbody>';
-                                echo '</table></div></div></div></div></div>';
+                                echo '<tfoot><tr>';
+                                echo '<td colspan=3>Total</td>';
+                                echo '<td>'.$total.'</td>';
+                                echo '</tr></tfoot>';
+                                echo '</table></div></div></div></div></div></div>';
                             endforeach;
                             ?>
 
