@@ -42,19 +42,19 @@
 
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Nome Desafio</label></div>
-                    <div class="col-12 col-md-9"><input type="text" id="reg_nome" name="reg_nome" value="<?echo $Desafio[0]['nome'];?>" class="form-control"></div>
+                    <div class="col-12 col-md-9"><input type="text" id="reg_nome" name="reg_nome" value="<?php echo $Desafio[0]['nome'];?>" class="form-control"></div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="textarea-input" class=" form-control-label">Questão</label></div>
-                    <div class="col-12 col-md-9"><textarea name="reg_questao" id="reg_questao" rows="9" class="form-control"><?echo $Desafio[0]['questao'];?></textarea></div>
+                    <div class="col-12 col-md-9"><textarea name="reg_questao" id="reg_questao" rows="9" class="form-control"><?php echo $Desafio[0]['questao'];?></textarea></div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="date-input" class=" form-control-label">Data de Início</label></div>
-                    <div class="col-12 col-md-9"><input type="date" id="reg_dataInicio" name="reg_dataInicio" value="<?echo $Desafio[0]['dataInicio'];?>" class="form-control"></div>
+                    <div class="col-12 col-md-9"><input type="date" id="reg_dataInicio" name="reg_dataInicio" value="<?php echo $Desafio[0]['dataInicio'];?>" class="form-control"></div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="date-input" class=" form-control-label">Data do Final</label></div>
-                    <div class="col-12 col-md-9"><input type="date" id="reg_dataFim" name="reg_dataFim" value="<?echo $Desafio[0]['dataFim'];?>" class="form-control"></div>
+                    <div class="col-12 col-md-9"><input type="date" id="reg_dataFim" name="reg_dataFim" value="<?php echo $Desafio[0]['dataFim'];?>" class="form-control"></div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="select" class=" form-control-label">Habilidades</label></div>
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <br>
-                <?
+                <?php
                 if ($Desafio[0]['idArquivo'] != null)
                 {
                     echo '<input type="hidden" id="reg_idArquivo" name="reg_idArquivo" value="'.$Desafio[0]['idArquivo'].'">';
@@ -96,7 +96,7 @@
                 </div>
                 <br>
                 <div class="login-button">
-                    <button type="submit" formaction="<?= base_url('index.php/BaremaDesafios/cadastro?idDesafio='.urlencode($idDesafio))?>" class="btn btn-primary btn-sm">
+                    <button type="submit" formaction="<?php echo base_url('index.php/BaremaDesafios/cadastro?idDesafio='.urlencode($idDesafio))?>" class="btn btn-primary btn-sm">
                         <i class="fa fa-dot-circle-o"></i> CadastroBarema
                     </button>
                 </div>
