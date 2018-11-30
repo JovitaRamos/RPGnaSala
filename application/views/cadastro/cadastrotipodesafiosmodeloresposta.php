@@ -45,7 +45,14 @@
                 <?php
                 if (isset($componentesModelo)){
                     foreach ($componentesModelo as $componenteModelo):
-                        echo $componenteModelo['componente'];
+                        echo '<div class="form-group">';
+                            echo $componenteModelo['componente'];
+                            echo '<div class="login-button">';
+                            echo '	<button type="submit" formaction="'.base_url("index.php/TiposDesafios/excluirDoModelo/").$componenteModelo['id'].'" class="btn btn-danger btn-sm">';
+                            echo '		<i class="fa fa-dot-circle-o"></i> Excluir';
+                            echo '	</button>';
+                            echo '</div>';
+                        echo '</div>';
                     endforeach;
                 }
                 ?>

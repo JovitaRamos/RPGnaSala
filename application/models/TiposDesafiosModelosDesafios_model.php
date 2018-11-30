@@ -25,6 +25,7 @@ class TiposDesafiosModelosDesafios_model extends CI_Model
 
     public function selectModelosDesafiosPorTiposDesafios($idTiposDesafios)
     {
+        $this->db->select('TDMD.id');
         $this->db->select('M.componente');
         $this->db->from('tiposDesafiosModelosDesafios as TDMD');
         $this->db->join('modeloDesafio as M','TDMD.idModelosDesafios = M.id');

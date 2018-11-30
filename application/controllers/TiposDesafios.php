@@ -121,6 +121,29 @@ class TiposDesafios extends CI_Controller
         $this->load->view('cadastro/cadastrotipodesafiosmodeloresposta', $data);
         $this->load->view('footer', $data);
     }
+    
+     public function excluirDoModelo($id)
+    {
+        $idTipoDesafio = $this->input->post('reg_id');
+         
+        $this->TiposDesafiosModelosDesafios_model->delete($id);
+       
+        $data['title'] = 'RPGnaSala';
+        $data['materias'] = $this->buscarMateriasPorProfessor();
+        $data['materiasAluno'] = $this->buscarMateriasPorAluno();
+        $data['habilidades'] = $this->buscarHabilidadesPorProfessor();
+        $data['tipoDesafio'] = $this->TiposDesafios_model->selectUltimoTipoDesafio();
+        $data['modelosDesafios'] = $this->ModeloDesafio_model->selectModelosDesafios();
+        $data['desafiosAluno'] = $this->buscarDesafiosPorAluno();
+        $data['componentesModelo'] = $this->TiposDesafiosModelosDesafios_model->selectModelosDesafiosPorTiposDesafios($idTipoDesafio);
+        $data['ehCadastroDesafio'] = false;
+
+        $this->load->view('header', $data);
+        $this->load->view('leftpainel', $data);
+        $this->load->view('cadastro/cadastrodesafios', $data);
+        $this->load->view('cadastro/cadastrotipodesafiosmodeloresposta', $data);
+        $this->load->view('footer', $data);
+    }
 
     public function buscarDesafiosPorAluno()
     {
