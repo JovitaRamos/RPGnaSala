@@ -63,7 +63,7 @@ class Desafios_model extends CI_Model
         $this->db->select('td.valorExperiencia');
         $this->db->select('r.nota');
         $this->db->from('desafios as d');
-        $this->db->join('tiposdesafios as td','td.id = d.id');
+        $this->db->join('tiposDesafios as td','td.id = d.id');
         $this->db->join('habilidades as h','h.id = d.idHabilidades');
         $this->db->join('habilidades_usuarios as hu','hu.idHabilidades = h.id');
         $this->db->join('alunos as a','a.id = hu.idAluno');
