@@ -57,9 +57,7 @@ class Desafios_model extends CI_Model
 
     public function selectDesafiosByAluno($idAluno)
     {
-        $this->db->select('d.id');
-        $this->db->select('d.nome');
-        $this->db->select('d.idHabilidades');
+        $this->db->select('d.*');
         $this->db->select('td.valorExperiencia');
         $this->db->select('r.nota');
         $this->db->from('desafios as d');
@@ -71,6 +69,7 @@ class Desafios_model extends CI_Model
         $this->db->where('a.idUsuario',$idAluno);
 
         $query = $this->db->get();
+        
         if ( $query->num_rows() > 0 )
         {
             $row = $query->result_array();

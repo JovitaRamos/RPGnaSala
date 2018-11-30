@@ -76,9 +76,16 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-ruler-pencil"></i>Desafios</a>
                         <ul class="sub-menu children dropdown-menu">
                             <?php
-                            if ($desafiosAluno){
+                            if (isset($desafiosAluno)){
                                 foreach ($desafiosAluno as $desafio):
-                                    echo '<li><i class="menu-icon ti-check-box"></i><a href="/RPGnaSala/index.php/Desafios/resolver?id=',urlencode($desafio['id']),'">'.$desafio['nome'].'</a></li>';
+                                
+                                    $pattern = 'Y-m-d';
+                                    $today = date($pattern);
+                                    $dataInicio = date($pattern, strtotime($desafio['dataInicio']));
+                                    $dataFim = date($pattern, strtotime($desafio['dataFim']));
+                                    if($today >= $dataInicio && $today <= $dataFim){
+                                        echo '<li><i class="menu-icon ti-check-box"></i><a href="/RPGnaSala/index.php/Desafios/resolver?id=',urlencode($desafio['id']),'">'.$desafio['nome'].'</a></li>';
+                                    }
                                 endforeach;
                             }
                             ?>
