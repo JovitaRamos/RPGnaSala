@@ -78,6 +78,32 @@ class Barema extends CI_Controller
         $this->load->view('cadastro/cadastrobarema', $data);
         $this->load->view('footer', $data);
     }
+    
+    public function excluirDoBarema($id)
+    {
+        $data['title'] = 'RPGnaSala';
+        $data['materias'] = $this->buscarMateriasPorProfessor();
+        $data['materiasAluno'] = $this->buscarMateriasPorAluno();
+        $data['habilidades'] = $this->buscarHabilidadesPorProfessor();
+        $data['Desafios'] = $this->buscarDesafiosPorProfessor();
+        $data['desafiosAluno'] = $this->buscarDesafiosPorAluno();
+        $data['tiposDesafios'] = $this->buscarTipoDesafioPorProfessor();
+
+        $idDesafio  = $this->input->post('reg_idDesafio');
+        $data['idDesafio'] = $idDesafio;
+
+        $this->Barema_model->delete($id);
+
+        $data['Desafio'] = $this->buscarDesafioParaGerenciar($idDesafio);
+
+        $data['componentesBarema'] = $this->Barema_model->selectBaremabyDesafio($idDesafio);
+
+        $this->load->view('header', $data);
+        $this->load->view('leftpainel', $data);
+        $this->load->view('gerenciardesafios', $data);
+        $this->load->view('cadastro/cadastrobarema', $data);
+        $this->load->view('footer', $data);
+    }
 
     public function buscarDesafiosPorAluno()
     {

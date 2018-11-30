@@ -20,20 +20,33 @@
                         <i class="fa fa-dot-circle-o"></i> Adicionar
                     </button>
                 </div>
-
+                <br/>
                 <?php
-                if (isset($componentesBarema)){
-                    foreach ($componentesBarema as $componenteBarema):
-                        echo '<div class="row form-group">';
-                        echo '<div class="col col-md-3"><label for="text-input" class=" form-control-label">Tarefa</label></div>';
-                        echo '<p>'.$componenteBarema['tarefa'].'</p>';
-                        echo '</div>';
-                        echo '<div class="row form-group">';
-                        echo '<div class="col col-md-3"><label for="text-input" class=" form-control-label">Percentual</label></div>';
-                        echo '<p>'.$componenteBarema['percentual'].'%</p>';
-                        echo '</div>';
-                    endforeach;
-                }
+                    echo '<table class="table table-striped">';
+                    echo '<tr><thead>';
+                    echo '<th scope="col">Terfa</th>';
+                    echo '<th scope="col">Percentual:</th>';
+                    echo '<th scope="col">#</th>';
+                    echo '</tr></thead><tbody>';
+                    if (isset($componentesBarema)){
+                        foreach ($componentesBarema as $componenteBarema):
+                        {
+                            echo '<tr>';
+                            echo '<td>'.$componenteBarema['tarefa'].'</td>';
+                            echo '<td>'.$componenteBarema['percentual'].'%</td>';
+                            echo '<td>';
+                                echo '<div class="login-button">';
+                                echo '	<button type="submit" formaction="'.base_url("index.php/Barema/excluirDoBarema/").$componenteBarema['id'].'" class="btn btn-danger btn-sm">';
+                                echo '		<i class="fa fa-dot-circle-o"></i> Excluir';
+                                echo '	</button>';
+                                echo '</div>';
+                                echo'</td>';
+                            echo '</tr>';
+                        }
+                        endforeach;
+                    }
+                    echo '</tbody>';                                
+                    echo '</table>';
                 ?>
             </form>
         </div>
