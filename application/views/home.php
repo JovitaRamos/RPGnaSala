@@ -1,4 +1,4 @@
-
+<?php $errorMessage = $this->session->flashdata('error_msg'); ?>
         <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
 
@@ -8,10 +8,17 @@
                     <div class="page-title">
                         <h1>Dashboard</h1>
                     </div>
+                    <?php if($errorMessage){ ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?= $errorMessage; ?>
+                        </div>
+                    <?php } ?>
+
                 </div>
             </div>
         </div>
-                            <?php    
+                        <?php 
+                        if(isset($dadosAluno)){
                             foreach ($dadosAluno as $dadoAluno):
                                 echo '<div class="content mt-3">';
                                 echo '<div class="animated fadeIn">';
@@ -23,6 +30,7 @@
                                 echo '<div class="card-body">';
                                 echo '<table class="table table-striped">';
                                 $total = 0;
+                            if(isset($habilidades)){
                                 foreach ($habilidades as $habilidadesAluno):
                                     if ($habilidadesAluno['idHabilidades'] === $dadoAluno['idHabilidades'])
                                     {
@@ -34,7 +42,7 @@
                                         echo '</tr></thead><tbody>';
                                         
                                         $index = 0;
-                                        
+                                        if(isset($desafiosAluno)){
                                         foreach ($desafiosAluno as $desafio):
                                             if ($desafio['idHabilidades'] === $dadoAluno['idHabilidades'])
                                             {
@@ -49,8 +57,10 @@
                                                 echo '</tr>';
                                             }
                                         endforeach;
+                                        }
                                     }
                                 endforeach;
+                                }
                                 echo '</tbody>';
                                 echo '<tfoot><tr>';
                                 echo '<td colspan=3>Total</td>';
@@ -58,7 +68,8 @@
                                 echo '</tr></tfoot>';
                                 echo '</table></div></div></div></div></div></div>';
                             endforeach;
-                            ?>
+                        }
+                    ?>
 
                      <!-- .content -->
     </div><!-- /#right-panel -->
