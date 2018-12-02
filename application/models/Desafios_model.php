@@ -26,7 +26,7 @@ class Desafios_model extends CI_Model
 
     public function selectDesafiosByProfessor($idProfessor)
     {
-        $this->db->select('d.nome,d.id');
+        $this->db->select('d.*');
         $this->db->from('desafios as d');
         $this->db->join('habilidades as h','h.id = d.idHabilidades');
         $this->db->where('h.idProfessor',$idProfessor);
@@ -41,7 +41,7 @@ class Desafios_model extends CI_Model
 
     public function selectMateriaByDesafio($idDesafio)
     {
-        $this->db->select('m.id');
+        $this->db->select('m.*');
         $this->db->from('desafios as d');
         $this->db->join('habilidades as h','h.id = d.idHabilidades');
         $this->db->join('materias as m','m.idHabilidades  = h.id');
