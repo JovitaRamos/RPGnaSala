@@ -24,6 +24,7 @@
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Matérias</a>
                         <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-plus-square"></i><a href=<?= base_url("index.php/Materias/cadastroMateria_view")?>>Cadastrar</a></li>
                             <?php
                             if ($materias){
                                 foreach ($materias as $materia):
@@ -31,7 +32,6 @@
                                 endforeach;
                             }
                             ?>
-                            <li><i class="fa fa-plus-square"></i><a href=<?= base_url("index.php/Materias/cadastroMateria_view")?>>Cadastrar</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
@@ -39,6 +39,14 @@
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-cogs"></i><a href="ui-buttons.html">Gerenciar</a></li>
                             <li><i class="fa fa-plus-square"></i><a href=<?= base_url("index.php/Habilidades/view")?>>Cadastrar</a></li>
+                            <?php                            
+                            if(isset($habilidades))
+                            {
+                                foreach ($habilidades as $habilidade):
+                                    echo '<li><i class="fa fa-table"></i><a href="'.base_url("index.php/Habilidades/view/").$habilidade['idHabilidades'].'/1">'.$habilidade['nome'].'</a></li>';
+                                endforeach;
+                            }
+                            ?>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
@@ -54,15 +62,15 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-book"></i>Matérias</a>
                         <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon ti-check-box"></i><a href=<?= base_url("index.php/Materias/inscricaoMateria_view")?>>Inscrever</a></li>
                             <?php
                             if($materiasAluno)
                             {
                                 foreach ($materiasAluno as $materiaAluno):
-                                    echo '<li><i class="fa fa-table"></i><a href="tables-basic.html">'.$materiaAluno['nome'].'</a></li>';
+                                    echo '<li><i class="fa fa-table"></i><a href="'.base_url("index.php/Materias/buscarMateriasPorCodigo/").$materiaAluno['codMateria'].'/1">'.$materiaAluno['nome'].'</a></li>';
                                 endforeach;
                             }
                             ?>
-                            <li><i class="menu-icon ti-check-box"></i><a href=<?= base_url("index.php/Materias/inscricaoMateria_view")?>>Inscrever</a></li>
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown">
@@ -78,14 +86,13 @@
                             <?php
                             if (isset($desafiosAluno)){
                                 foreach ($desafiosAluno as $desafio):
-                                
                                     $pattern = 'Y-m-d';
                                     $today = date($pattern);
                                     $dataInicio = date($pattern, strtotime($desafio['dataInicio']));
                                     $dataFim = date($pattern, strtotime($desafio['dataFim']));
-                                    if($today >= $dataInicio && $today <= $dataFim){
+                                    //if($today >= $dataInicio && $today <= $dataFim){
                                         echo '<li><i class="menu-icon ti-check-box"></i><a href="/RPGnaSala/index.php/Desafios/resolver?id=',urlencode($desafio['id']),'">'.$desafio['nome'].'</a></li>';
-                                    }
+                                    //}
                                 endforeach;
                             }
                             ?>

@@ -1,9 +1,17 @@
-
+<?php 
+    $errorMessage = $this->session->flashdata('error_msg');    
+?>
 <div class="col-lg-6">
     <div class="login-form-1">
         <div class="card-header">
-            <strong>Cadastro</strong> Matéria
+            <strong>Inscrição</strong> Matéria
         </div>
+        <?php if($errorMessage){ ?>
+            <div class="alert alert-danger" role="alert">
+                <?= $errorMessage; ?>
+            </div>
+        <?php } ?>
+        
         <div class="card-body card-block">
             <form action="<?= base_url("index.php/Materias/buscarMateriasPorCodigo")?>" method="post" enctype="multipart/form-data" class="form-horizontal">
                 <div class="row form-group">
@@ -14,13 +22,19 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Codigo da Matéria</label></div>
-                    <div class="col-12 col-md-9"><input type="text" id="reg_codMateria" name="reg_codMateria" placeholder="ex: TCC2018" class="form-control"><small class="form-text text-muted">insira o código da materia fornecida pelo professor</small></div>
+                    <div class="col-12 col-md-9"><input type="text" id="reg_codMateria" name="reg_codMateria" <?php if(isset($codMateria)){echo 'placeholder="'.$codMateria.'"';} else { echo 'placeholder="ex: TCC2018"';} ?> <?php if(isset($readOnly) && $readOnly){ echo 'disabled=""';}?> class="form-control">
+                        <?php if(!isset($codMateria)){ ?>
+                        <small class="form-text text-muted">insira o código da materia fornecida pelo professor</small>
+                        <?php } ?>
+                    </div>
                 </div>
+            <?php if(!isset($readOnly) || !$readOnly){ ?>
                 <div class="login-button">
                     <button type="submit" class="btn btn-primary btn-sm">
                         <i class="fa fa-dot-circle-o"></i> Buscar
                     </button>
                 </div>
+            <?php } ?>
             </form>
         </div>
 
@@ -40,11 +54,13 @@
                 </div>
                 <input type="hidden" id="reg_idMateria" name="reg_idMateria" value="<?php if(isset($idmateria)){echo $idmateria;}?>" class="form-control">
                 <input type="hidden" id="reg_idHabilidades" name="reg_idHabilidades" value="<?php if(isset($idHabilidades)){echo $idHabilidades;}?>" class="form-control">
+                <?php if(!isset($readOnly) || !$readOnly){ ?>
                 <div class="login-button">
                     <button type="submit" class="btn btn-primary btn-sm">
                         <i class="fa fa-dot-circle-o"></i> Inscrever
                     </button>
                 </div>
+                <?php }?>
             </form>
         </div>
 </div>
