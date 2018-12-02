@@ -32,7 +32,7 @@ class Materia_model extends CI_Model
 
     public function selectBycodMateria($codMateria)
     {
-        $this->db->select('nome,objetivo,id,idHabilidades');
+        $this->db->select('*');
         $this->db->from('materias');
         $this->db->where('codMateria',$codMateria);
         $query = $this->db->get();
@@ -57,10 +57,18 @@ class Materia_model extends CI_Model
             return $row;
         }
     }
+    
+    public function countByIdMateria($idMateria)
+    {
+        $this->db->from('materias');
+        $this->db->join('alunos','alunos.idMaterias = materias.id');
+        $this->db->where('materias.id',$idMateria);
+        return $this->db->count_all_results();
+    }
 
     public function selectNomeByProfessor($idProfessor)
     {
-        $this->db->select('nome,id');
+        $this->db->select('*');
         $this->db->from('materias');
         $this->db->where('idProfessor',$idProfessor);
 
@@ -74,7 +82,7 @@ class Materia_model extends CI_Model
 
     public function selectMateriaByAluno($idAluno)
     {
-        $this->db->select('nome,materias.id');
+        $this->db->select('materias.*');
         $this->db->from('materias');
         $this->db->join('alunos','alunos.idMaterias = materias.id');
         $this->db->where('alunos.idUsuario',$idAluno);
@@ -96,6 +104,7 @@ class Materia_model extends CI_Model
         $this->db->select('hu.nivel as Nivel');
         $this->db->select('h.nome as NomeHabilidades');
         $this->db->select('h.id as idHabilidades');
+        $this->db->select('m.codMateria as codMateria');
         $this->db->from('materias as m');
         $this->db->join('alunos as a','a.idMaterias = m.id');
         $this->db->join('habilidades as h','h.id = m.idHabilidades');
@@ -117,5 +126,21 @@ class Materia_model extends CI_Model
 
         $query = $this->db->query($sql);
         return $query->result_array();
+    }
+    
+    public function selectByIdAlunoAndIdMateria($idAluno, $idMateria)
+    {
+        $this->db->select('materias.*');
+        $this->db->from('materias');
+        $this->db->join('alunos','alunos.idMaterias = materias.id');
+        $this->db->where('alunos.idUsuario',$idAluno);
+        $this->db->where('materias.id',$idMateria);
+
+        $query = $this->db->get();
+        if ( $query->num_rows() > 0 )
+        {
+            $row = $query->row();
+            return $row;
+        }
     }
 }
