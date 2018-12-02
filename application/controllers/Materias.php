@@ -117,6 +117,28 @@ class Materias extends CI_Controller {
             'idMaterias'=>$idMaterias,
             'idUsuario'=>$idUsuario
         );
+        
+        $materia = $this->Materia_model->selectByIdAlunoAndIdMateria($idUsuario, $idMaterias);
+        
+        if(isset($materia)){
+            $this->session->set_flashdata('error_msg', 'Aluno já está matriculado na matéria '.$materia->nome.'!');
+            redirect('Materias/inscricaoMateria_view/'.$materia->codMateria."/false", 'refresh');
+            return;
+        }
+        
+        $materia = $this->Materia_model->selectByidMateria($idMaterias);
+        $quantidadeMatriculados = $this->Materia_model->countByIdMateria($idMaterias);
+            
+        if(intval($materia->quantidadeAlunos) >= $quantidadeMatriculados){
+            $this->session->set_flashdata('error_msg', 'Não é possível matricular aluno: capacidade máxima de '.$quantidadeMatriculados.'alunos excedida!');
+            redirect('Materias/inscricaoMateria_view/'.$materia->codMateria, 'refresh');
+            return;
+        } else {
+            $this->matricularAlunoMateria();   
+        }
+    }
+    
+    private function matricularAlunoMateria(){
         $this->Alunos_model->insert($aluno);
 
         $idAluno = $this->Alunos_model->selectAlunoByUsuario($idUsuario,$idMaterias);
@@ -130,19 +152,24 @@ class Materias extends CI_Controller {
         redirect('Materias/view', 'refresh');
     }
 
-    public function buscarMateriasPorCodigo()
+    public function buscarMateriasPorCodigo($codMateria = null, $readOnly = false)
     {
-        $codMateria = $this->input->post('reg_codMateria');
+        if($codMateria == null){
+            $codMateria = $this->input->post('reg_codMateria');
+        }
 
         $materia = $this->Materia_model->selectBycodMateria($codMateria);
         $data['nomemateria'] = $materia->nome;
         $data['objetivomateria'] = $materia->objetivo;
         $data['idmateria'] = $materia->id;
         $data['idHabilidades'] = $materia->idHabilidades;
+        $data['codMateria'] = $codMateria;
+        $data['readOnly'] = $readOnly;        
         $data['title'] = 'RPGnaSala';
         $data['materias'] = $this->buscarMateriasPorProfessor();
         $data['user_name'] = $this->session->userdata('user_name');
-
+        $data['desafiosAluno'] = $this->buscarDesafiosPorAluno();
+        $data['materiasAluno'] = $this->buscarMateriasPorAluno();
 
         $this->load->view('header', $data);
         $this->load->view('leftpainel', $data);
@@ -165,8 +192,17 @@ class Materias extends CI_Controller {
         $this->load->view('footer', $data);
     }
 
-    public function inscricaoMateria_view()
+    public function inscricaoMateria_view($codMateria = null)
     {
+        if($codMateria != null){
+            $materia = $this->Materia_model->selectBycodMateria($codMateria);
+            $data['nomemateria'] = $materia->nome;
+            $data['objetivomateria'] = $materia->objetivo;
+            $data['idmateria'] = $materia->id;
+            $data['idHabilidades'] = $materia->idHabilidades;
+            $data['codMateria'] = $materia->codMateria;
+        }
+        
         $data['title'] = 'RPGnaSala';//ucfirst($page); // Capitalize the first letter
         $data['materias'] = $this->buscarMateriasPorProfessor();
         $data['user_name'] = $this->session->userdata('user_name');
