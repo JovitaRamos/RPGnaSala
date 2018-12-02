@@ -37,6 +37,14 @@ class Habilidades extends CI_Controller
         $data['materias'] = $this->buscarMateriasPorProfessor();
         $data['materiasAluno'] = $this->buscarMateriasPorAluno();
         $data['desafiosAluno'] = $this->buscarDesafiosPorAluno();
+        
+        $idUsuario = $this->session->userdata('user_id');
+        $data['title'] = 'RPGnaSala';//ucfirst($page); // Capitalize the first letter
+        $data['materias'] = $this->buscarMateriasPorProfessor();
+        $data['materiasAluno'] = $this->buscarMateriasPorAluno();
+        $data['desafiosAluno'] = $this->buscarDesafiosPorAluno();
+        $data['habilidades'] = $this->Habilidades_Usuarios_model->selectByidUsuario($idUsuario);
+        
 
         $this->load->view('header', $data);
         $this->load->view('leftpainel', $data);
