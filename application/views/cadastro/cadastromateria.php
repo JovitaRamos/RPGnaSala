@@ -12,7 +12,7 @@
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Codigo da Matéria</label></div>
-                    <div class="col-12 col-md-9"><input type="text" id="reg_codMateria" name="reg_codMateria" placeholder="ex: TCC2018" class="form-control"><small class="form-text text-muted">seus alunos vão se matricular com este código</small></div>
+                    <div class="col-12 col-md-9"><input type="text" id="reg_codMateria" name="reg_codMateria" placeholder="ex: TCC2018" value="<?= rand(); ?>" class="form-control"><small class="form-text text-muted">seus alunos vão se matricular com este código</small></div>
                 </div>
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="text-input" class=" form-control-label">Numero de Alunos</label></div>
